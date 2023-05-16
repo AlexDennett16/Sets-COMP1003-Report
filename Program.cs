@@ -1,149 +1,251 @@
-﻿
-using System;
-using System.Collections.Generic;
+﻿using System;
+using System.ComponentModel;
+using System.Reflection;
+using System.Xml.Serialization;
 
 namespace Report
 {
     class Program
     {
-        List<int> S = new List<int>();
-        List<int> T = new List<int>();
+        int[] set1 = new int[20];
+        int[] set2 = new int[20];
 
-        public void Clear_Set()
+        public void Clear_Set(ref int[] set)
         {
-            S = new List<int>();
+            set = new int[set.Length]; 
         }
 
 
-        public bool Is_Empty()
+        public bool Is_Empty(ref int[] set)
         {
-            if (S.Count == 0)
-                return true;
-            else
-                return false;
-        }
-
-        public int Size()
-        {
-            return S.Count;
-        }
-
-        public int Capacity()
-        {
-            return S.Capacity;
-        }
-
-        public bool Is_Element_Of(int x)
-        {
-            if (S.Contains(x))
-                return true;
-            else
-                return false;
-        }
-
-        public void Print()
-        {
-            for (int i = 0; i < S.Count; i++)
-                Console.WriteLine(S[i]);
-        }
-
-        //If x doesnt exist in S, we add it
-        public List<int> Add(int x)
-        {
-            if (!S.Contains(x))
+            int[] emptySet = new int[set.Length];
+            for (int i = 0; i < set.Length; i++)
             {
-                S.Add(x);
-                return S;
-            }
-            else
-                return S;
-        }
-
-        //We check if list contains x, if it does, we delete the entry from S
-        public List<int> Remove(int x)
-        {
-            if (S.Contains(x))
-                S.Remove(x);
-            return S;
-        }
-
-        //Returns a copied, by value, list of S
-        public List<int> Copy_Set(List<int> S)
-        {
-            return new List<int>(S);
-        }
-
-
-        //Checks eevry number in S, if we find any non-matching entries,
-        //return false else returns true as S is in T
-        public bool Is_Subset(List<int> S, List<int> T)
-        {
-            foreach(int testnum in S)
-            {
-                if (!T.Contains(testnum))
+                if (set[i] != emptySet[i])
                     return false;
             }
             return true;
         }
-        /*<variables>
-         * bigList = Int List that holds the larger of given lists
-         * smallList = Int List that holds the smaller ~
-         * unionList = Int List, intialised but not filled
-         *</variables>
-         *<summary>
-         * Iterates over every integar entry in bigList testing if it is
-         * in the smallList, if it is we add to our union list. Else
-         * do nothing. Then returns this union list.
-         *</summary> 
+
+        public int Size(ref int[] set)
+        {
+            for (int i = 0; i < 20; i++)
+            {
+                if (set[i] == 0)
+                    return i;
+            }
+            return 20;
+        }
+
+        public int Capacity(ref int[] set)
+        {
+            return set.Length;
+        }
+
+        public bool Is_Element_Of(ref int[] set, int x)
+        {
+            foreach (int y in set)
+            {
+                if (x == y) 
+                    return true;
+            }
+            return false;
+        }
+
+        public void Print(ref int[] set)
+        {
+            if (Is_Empty(ref set) == true)
+            {
+                Console.WriteLine("There are no elements in this array!\n\n");
+                return;
+            }
+                
+            for (int i = 0; i < Size(ref set); i++)
+                Console.WriteLine(set[i]);
+            Console.WriteLine("\n\n");
+        }   
+
+
+        /*
+         * PART B
+         * These add and remove commands are build around keeping a set contiguous
+         * A set should be of form {1,3,5,2,4,0,0,0} where 0 are null values and not counted as prt of the set
+         * They remove the need for a sorting algorithm after every deletion to check the block is together
          */
-        public List<int> Intersection(List<int> S, List<int> T)
+        
+
+        //If x doesnt exist in the set, and the set is not at capacity, we can add x to the end
+        public void Add(ref int[] set, int x)
         {
-            List<int> bigList = S.Count > T.Count ? S : T;
-            List<int> smallList = S.Count < T.Count ? S : T;
-            List<int> unionList = new List<int>();
-            foreach (int testnum in bigList)
+            if (Is_Element_Of(ref set, x) == false && (Size(ref set) < Capacity(ref set)))
+                set[Size(ref set)] = x;
+        }
+
+        /* First check if element in array, if not abort removal
+         * Then if array is size 1, we can just remove the only entry
+         * Otherwise we replace the deleted entry with the last entry (set[sizeOfSet])
+         */
+        public void Remove(ref int[] set, int x)
+        {
+            if (Is_Element_Of(ref set, x) == false)
+                return;
+
+            int sizeOfSet = Size(ref set);
+            if (sizeOfSet == 1)
             {
-                if (smallList.Contains(testnum))
-                    unionList.Add(testnum);
+                set[0] = 0;
+                return;
             }
-            return unionList;
+
+            for (int i = 0; i < sizeOfSet; i++)
+            {
+                if (set[i] == x)
+                {
+                    set[i] = set[sizeOfSet];
+                    set[sizeOfSet] = 0;
+                }
+
+            }
+        }
+
+        //PART C
+
+        //Set is passed by value in this example, therefore returning it will return a value-copied but different array
+        public int[] Copy_Set(ref int[] set)
+        {
+            int[] copyset = new int[Capacity(ref set)];
+
+            for (int i = 0; i < Capacity(ref set); i++)
+                copyset[i] = set[i];
+
+            return copyset;
         }
 
 
-        /*<summary>
-         * Creates an empty list, difflist, then iterates over S.
-         * If entry in S is unique, it is added to our difflist, if not
-         * we remove the duplicate copy from T. Once fully iterated
-         * Adds all unique entries from T then returns the Unique entries
-         * list 
-         *</summary>
+        //Checks eevry number in set1 to the entirety of set2, if we find any non-matching entries, return false
+        //otherwise all entries in set1 exist in set2, and it is a true subset
+        public bool Is_Subset(ref int[] set1, ref int[] set2)
+        {
+            for (int i = 0; i < Size(ref set1); i++)
+            {
+                if (Is_Element_Of(ref set2, set1[i]) == false)
+                    return false;
+            }
+            return true;
+        }
+
+        //Takes in 2 reference arrays and takes the smaller and larger of the 2
+        //Putting larger first, and smaller second, only used in 2 functions below
+        public Tuple<int[], int[]> Size_Of_Two_Arrays(ref int[] set1, ref int[] set2)
+        {
+            int set1Length = Size(ref set1);
+            int set2Length = Size(ref set2);
+
+            int[] bigArray = set1Length >= set2Length ? set1 : set2;
+            int[] smallArray = set1Length < set2Length ? set1 : set2;
+
+            Print(ref bigArray);
+            Print(ref smallArray);
+
+            return Tuple.Create(bigArray, smallArray);
+        }
+
+        /*
+         * Grab tuple of largest and smallest array, then iterate over largest of the two
+         * We then iterate over every element in the larger array, and comparing it to the entire smaller array, to check if it is present
+         * if it is we add it to the newly created unionArray, which is initialised to capacity of bigArray, to prevent overflows
+         */
+        public int[] Intersection(ref int[] set1, ref int[] set2)
+        {
+            Tuple<int[], int[]> arrayHolder = Size_Of_Two_Arrays(ref set1, ref set2);
+            var (bigArray, smallArray) = arrayHolder;
+
+            Print(ref bigArray);
+            Print(ref smallArray);
+
+            int[] unionArray = new int[Capacity(ref bigArray)];
+            for (int i = 0; i < Size(ref bigArray); i++)
+            {
+                if (Is_Element_Of(ref smallArray, bigArray[i]) == true)
+                {
+                    Print(ref unionArray);
+                    unionArray[i] = bigArray[i];
+                } 
+            }
+            return unionArray;
+        }
+
+
+        /* 
+         * Grab tuple of largest and smallest array, then iterate over largest of the two
+         * If it exists in bigarray and not in small array we add it to diffArray
+         * If it is in both, we remove it from small array
+         * then after full iteration add what is left from small array as these are exclusive to small array
          */          
-        public List<int> Symmetric_Difference(List<int> S, List<int> T)
+        public int[] Symmetric_Difference(ref int[] set1, ref int[] set2)
         {
-            List<int> diffList = new List<int>();
+            Tuple<int[], int[]> arrayHolder = Size_Of_Two_Arrays(ref set1, ref set2);
+            var (bigArray, smallArray) = arrayHolder; 
 
-            foreach(int testnum in S)
+            int[] diffArray = new int[Capacity(ref bigArray)];
+            for (int i = 0; i < Size(ref bigArray); i++)
             {
-                if (T.Contains(testnum) == false)
-                    diffList.Add(testnum);
+                if (Is_Element_Of(ref smallArray, bigArray[i]) == true)
+                    diffArray[i] = bigArray[i];
                 else
-                    T.Remove(testnum);
+                    smallArray[i] = 0;
             }
 
-            diffList.AddRange(T);
-            return diffList;
+            int ptr = Size(ref diffArray); 
+            for (int i = 0; i < Size(ref smallArray); i++)
+            {
+                diffArray[ptr + i] = smallArray[i];
+            }
+
+            return diffArray;
         }
+
+
+
+
 
 
         static void Main(string[] args)
         {
 
 
-            List<int> S = new List<int>();
-            List<int> T = new List<int>();
+            int[] set1 = new int[20];
+            int[] set2 = new int[20];
+
+            Program p = new Program();
+
+            //Testing empty Array
+            //p.Print(ref set1);
+
+            //Set1 (10, 20, 0, 0...) Set2 (10, 0, 0, 0...)
+            p.Add(ref set1, 10);
+            p.Add(ref set1, 20);
+            p.Add(ref set1, 30);
+            p.Add(ref set1, 40);
+            p.Add(ref set1, 50);
+            p.Add(ref set1, 60);
+
+            p.Add(ref set2, 10);
+            p.Add(ref set2, 30);
+            p.Add(ref set2, 50);
+            p.Add(ref set2, 70);
 
 
-            Console.WriteLine("Hello World!");
+            
+            int[] intersec = p.Intersection(ref set1, ref set2);
+            //int[] symdiff = p.Symmetric_Difference(ref set1, ref set2);
+
+            p.Print(ref intersec);
+
+            //p.Print(ref symdiff);
+            
+
+
         }
     }
 }

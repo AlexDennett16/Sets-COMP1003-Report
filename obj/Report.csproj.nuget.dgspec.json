@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\alexd\\OneDrive\\Desktop\\Project\\COMP1003\\Report\\Report.csproj": {}
+    "C:\\Users\\Alex\\OneDrive - University of Plymouth\\Desktop\\Projects\\Sets-COMP1003-Report\\Report.csproj": {}
   },
   "projects": {
-    "C:\\Users\\alexd\\OneDrive\\Desktop\\Project\\COMP1003\\Report\\Report.csproj": {
+    "C:\\Users\\Alex\\OneDrive - University of Plymouth\\Desktop\\Projects\\Sets-COMP1003-Report\\Report.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\alexd\\OneDrive\\Desktop\\Project\\COMP1003\\Report\\Report.csproj",
+        "projectUniqueName": "C:\\Users\\Alex\\OneDrive - University of Plymouth\\Desktop\\Projects\\Sets-COMP1003-Report\\Report.csproj",
         "projectName": "Report",
-        "projectPath": "C:\\Users\\alexd\\OneDrive\\Desktop\\Project\\COMP1003\\Report\\Report.csproj",
-        "packagesPath": "C:\\Users\\alexd\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\alexd\\OneDrive\\Desktop\\Project\\COMP1003\\Report\\obj\\",
+        "projectPath": "C:\\Users\\Alex\\OneDrive - University of Plymouth\\Desktop\\Projects\\Sets-COMP1003-Report\\Report.csproj",
+        "packagesPath": "C:\\Users\\Alex\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Alex\\OneDrive - University of Plymouth\\Desktop\\Projects\\Sets-COMP1003-Report\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "A:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\alexd\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Alex\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -49,7 +49,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -58,7 +59,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.412\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }

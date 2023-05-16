@@ -1,0 +1,14 @@
+C:\Users\Alex\OneDrive - University of Plymouth\Desktop\Projects\Sets-COMP1003-Report\obj\Debug\netcoreapp3.1\Report.csproj.AssemblyReference.cache
+C:\Users\Alex\OneDrive - University of Plymouth\Desktop\Projects\Sets-COMP1003-Report\obj\Debug\netcoreapp3.1\Report.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Alex\OneDrive - University of Plymouth\Desktop\Projects\Sets-COMP1003-Report\obj\Debug\netcoreapp3.1\Report.AssemblyInfoInputs.cache
+C:\Users\Alex\OneDrive - University of Plymouth\Desktop\Projects\Sets-COMP1003-Report\obj\Debug\netcoreapp3.1\Report.AssemblyInfo.cs
+C:\Users\Alex\OneDrive - University of Plymouth\Desktop\Projects\Sets-COMP1003-Report\obj\Debug\netcoreapp3.1\Report.csproj.CoreCompileInputs.cache
+C:\Users\Alex\OneDrive - University of Plymouth\Desktop\Projects\Sets-COMP1003-Report\bin\Debug\netcoreapp3.1\Report.exe
+C:\Users\Alex\OneDrive - University of Plymouth\Desktop\Projects\Sets-COMP1003-Report\bin\Debug\netcoreapp3.1\Report.deps.json
+C:\Users\Alex\OneDrive - University of Plymouth\Desktop\Projects\Sets-COMP1003-Report\bin\Debug\netcoreapp3.1\Report.runtimeconfig.json
+C:\Users\Alex\OneDrive - University of Plymouth\Desktop\Projects\Sets-COMP1003-Report\bin\Debug\netcoreapp3.1\Report.runtimeconfig.dev.json
+C:\Users\Alex\OneDrive - University of Plymouth\Desktop\Projects\Sets-COMP1003-Report\bin\Debug\netcoreapp3.1\Report.dll
+C:\Users\Alex\OneDrive - University of Plymouth\Desktop\Projects\Sets-COMP1003-Report\bin\Debug\netcoreapp3.1\Report.pdb
+C:\Users\Alex\OneDrive - University of Plymouth\Desktop\Projects\Sets-COMP1003-Report\obj\Debug\netcoreapp3.1\Report.dll
+C:\Users\Alex\OneDrive - University of Plymouth\Desktop\Projects\Sets-COMP1003-Report\obj\Debug\netcoreapp3.1\Report.pdb
+C:\Users\Alex\OneDrive - University of Plymouth\Desktop\Projects\Sets-COMP1003-Report\obj\Debug\netcoreapp3.1\Report.genruntimeconfig.cache
