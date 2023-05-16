@@ -44,11 +44,10 @@ namespace Report
 
         public bool Is_Element_Of(ref int[] set, int x)
         {
-            foreach (int y in set)
-            {
-                if (x == y) 
+            for (int i = 0; i < Size(ref set); i++)
+                if (x == set[i])
                     return true;
-            }
+
             return false;
         }
 
@@ -144,9 +143,6 @@ namespace Report
             int[] bigArray = set1Length >= set2Length ? set1 : set2;
             int[] smallArray = set1Length < set2Length ? set1 : set2;
 
-            Print(ref bigArray);
-            Print(ref smallArray);
-
             return Tuple.Create(bigArray, smallArray);
         }
 
@@ -167,10 +163,7 @@ namespace Report
             for (int i = 0; i < Size(ref bigArray); i++)
             {
                 if (Is_Element_Of(ref smallArray, bigArray[i]) == true)
-                {
-                    Print(ref unionArray);
-                    unionArray[i] = bigArray[i];
-                } 
+                    unionArray[Size(ref unionArray)] = bigArray[i];
             }
             return unionArray;
         }
@@ -222,7 +215,7 @@ namespace Report
             //Testing empty Array
             //p.Print(ref set1);
 
-            //Set1 (10, 20, 0, 0...) Set2 (10, 0, 0, 0...)
+            //Set1 (10, 20, 30, 40, 50, 60) Set2 (10, 30, 50, 70)
             p.Add(ref set1, 10);
             p.Add(ref set1, 20);
             p.Add(ref set1, 30);
@@ -237,12 +230,12 @@ namespace Report
 
 
             
-            int[] intersec = p.Intersection(ref set1, ref set2);
-            //int[] symdiff = p.Symmetric_Difference(ref set1, ref set2);
+            //int[] intersec = p.Intersection(ref set1, ref set2);
+            int[] symdiff = p.Symmetric_Difference(ref set1, ref set2);
 
-            p.Print(ref intersec);
+            //p.Print(ref intersec);
 
-            //p.Print(ref symdiff);
+            p.Print(ref symdiff);
             
 
 
