@@ -1,7 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Reflection;
-using System.Xml.Serialization;
 
 namespace Report
 {
@@ -34,7 +31,7 @@ namespace Report
                 if (set[i] == 0)
                     return i;
             }
-            return 20;
+            return Capacity(ref set);
         }
 
         public int Capacity(ref int[] set)
@@ -60,7 +57,7 @@ namespace Report
             }
                 
             for (int i = 0; i < Size(ref set); i++)
-                Console.WriteLine(set[i]);
+                Console.Write(set[i] + ",");
             Console.WriteLine("\n\n");
         }   
 
@@ -76,7 +73,10 @@ namespace Report
         //If x doesnt exist in the set, and the set is not at capacity, we can add x to the end
         public void Add(ref int[] set, int x)
         {
-            if (Is_Element_Of(ref set, x) == false && (Size(ref set) < Capacity(ref set)))
+            if (x <= 0)
+                Console.WriteLine("You are trying to add an invalid element! Negatives and Zero are not allowed!");
+
+            else if (Is_Element_Of(ref set, x) == false && (Size(ref set) < Capacity(ref set)))
                 set[Size(ref set)] = x;
         }
 
@@ -109,12 +109,13 @@ namespace Report
 
         //PART C
 
-        //Set is passed by value in this example, therefore returning it will return a value-copied but different array
+        //We iterate over the given array, creating a new array from it, with same elements
+        //We only copy from Size, as the rest of elements will be 0's
         public int[] Copy_Set(ref int[] set)
         {
             int[] copyset = new int[Capacity(ref set)];
 
-            for (int i = 0; i < Capacity(ref set); i++)
+            for (int i = 0; i < Size(ref set); i++)
                 copyset[i] = set[i];
 
             return copyset;
@@ -156,9 +157,6 @@ namespace Report
             Tuple<int[], int[]> arrayHolder = Size_Of_Two_Arrays(ref set1, ref set2);
             var (bigArray, smallArray) = arrayHolder;
 
-            Print(ref bigArray);
-            Print(ref smallArray);
-
             int[] unionArray = new int[Capacity(ref bigArray)];
             for (int i = 0; i < Size(ref bigArray); i++)
             {
@@ -181,19 +179,15 @@ namespace Report
             var (bigArray, smallArray) = arrayHolder; 
 
             int[] diffArray = new int[Capacity(ref bigArray)];
-            for (int i = 0; i < Size(ref bigArray); i++)
-            {
-                if (Is_Element_Of(ref smallArray, bigArray[i]) == true)
-                    diffArray[i] = bigArray[i];
-                else
-                    smallArray[i] = 0;
-            }
 
-            int ptr = Size(ref diffArray); 
+            for (int i = 0; i < Size(ref bigArray); i++)
+                if (Is_Element_Of(ref smallArray, bigArray[i]) == false)
+                    diffArray[Size(ref diffArray)] = bigArray[i];
+
             for (int i = 0; i < Size(ref smallArray); i++)
-            {
-                diffArray[ptr + i] = smallArray[i];
-            }
+                if (Is_Element_Of(ref bigArray, smallArray[i]) == false)
+                    diffArray[Size(ref diffArray)] = smallArray[i];
+
 
             return diffArray;
         }
@@ -213,7 +207,15 @@ namespace Report
             Program p = new Program();
 
             //Testing empty Array
-            //p.Print(ref set1);
+            Console.WriteLine("Blow should give empty array message");
+            p.Print(ref set1);
+
+            //Testing clear set
+            p.Add(ref set1, 100);
+            p.Clear_Set(ref set1);
+            Console.WriteLine("\nBelow Should give empty set");
+            p.Print(ref set1);
+
 
             //Set1 (10, 20, 30, 40, 50, 60) Set2 (10, 30, 50, 70)
             p.Add(ref set1, 10);
@@ -227,14 +229,33 @@ namespace Report
             p.Add(ref set2, 30);
             p.Add(ref set2, 50);
             p.Add(ref set2, 70);
+            p.Add(ref set2, 15);
 
+            //Testing Add and Print
+            Console.WriteLine("\nExpected 10, 30, 50, 70, 15");
+            p.Print(ref set2);
+
+            //Testing remove
+            Console.WriteLine("\nExpected 10, 30, 50, 70, ");
+            p.Remove(ref set2, 15);
+            p.Print(ref set2);
+
+
+            Console.WriteLine("Size of set is should be 6, capacity should be 20 but adaptable\nSize is " + p.Size(ref set1) + " and Capacity is " + p.Capacity(ref set1));
+
+
+
+
+            Console.WriteLine("\nThe below should resolve to false as neither are subsets\n" + p.Is_Subset(ref set1, ref set2));
 
             
-            //int[] intersec = p.Intersection(ref set1, ref set2);
+            int[] intersec = p.Intersection(ref set1, ref set2);
             int[] symdiff = p.Symmetric_Difference(ref set1, ref set2);
 
-            //p.Print(ref intersec);
+            Console.WriteLine("\nThe below should print 10, 30, 50 with current add inputs - Intersection");
+            p.Print(ref intersec);
 
+            Console.WriteLine("\nThe below should print 20, 40, 60, 70 with current add inputs - Symmetric Difference");
             p.Print(ref symdiff);
             
 
