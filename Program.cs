@@ -27,7 +27,7 @@ namespace Report
 
         public static int Size(ref int[] set)
         {
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < Capacity(ref set); i++)
             {
                 if (set[i] == 0)
                     return i;
@@ -35,9 +35,21 @@ namespace Report
             return Capacity(ref set);
         }
 
+        //We Assume a max size 512, smaller are allowed, so indexing 0-511
+        //This is inoptimal solution, but does save the need for .length and variable tracking throughout
         public static int Capacity(ref int[] set)
         {
-            return set.Length;
+            int testnum;
+            for (int i = 0; i < 512; i++)
+                try
+                {
+                    testnum = set[i];
+                }
+                catch (Exception)
+                {
+                    return i;
+                }
+            return 512;
         }
 
         public static bool Is_Element_Of(ref int[] set, int x)
@@ -53,7 +65,7 @@ namespace Report
         {
             if (Is_Empty(ref set) == true)
             {
-                Console.WriteLine("There are no elements in this array!\n\n");
+                Console.WriteLine("{}\n\n");
                 return;
             }
                 
@@ -101,8 +113,8 @@ namespace Report
             {
                 if (set[i] == x)
                 {
-                    set[i] = set[sizeOfSet];
-                    set[sizeOfSet] = 0;
+                    set[i] = set[sizeOfSet - 1];
+                    set[sizeOfSet - 1] = 0;
                 }
 
             }
@@ -204,16 +216,16 @@ namespace Report
 
             int[] set1 = new int[20];
             int[] set2 = new int[20];
-
+            int[] set3 = new int[20];
 
             //Testing empty Array
-            Console.WriteLine("Blow should give empty array message");
+            Console.WriteLine("Below should give empty array message - Testing print logic");
             Print(ref set1);
 
             //Testing clear set
             Add(ref set1, 100);
             Clear_Set(ref set1);
-            Console.WriteLine("\nBelow Should give empty set");
+            Console.WriteLine("\nBelow Should give empty set - Test Clear Set");
             Print(ref set1);
 
 
@@ -230,23 +242,27 @@ namespace Report
             Add(ref set2, 50);
             Add(ref set2, 70);
             Add(ref set2, 15);
+            Add(ref set2, 999);
 
+            Add(ref set3, 10);
+                
             //Testing Add and Print
-            Console.WriteLine("\nExpected 10, 30, 50, 70, 15");
+            Console.WriteLine("\nExpected 10, 30, 50, 70, 15, 999 - Test Add set2 Plus Size should be 6, is " + Size(ref set2));
             Print(ref set2);
 
             //Testing remove
-            Console.WriteLine("\nExpected 10, 30, 50, 70, ");
+            Console.WriteLine("\nExpected 10, 30, 50, 70, - Test Remove set2");
             Remove(ref set2, 15);
-            Print(ref set2);
+            Remove(ref set2, 999);
+            Print(ref set2 );
+            Console.WriteLine("Plus Size should be 4, is " + Size(ref set2));
 
+            //Testing Size and Capcity
+            Console.WriteLine("Size of set1 is should be 6, capacity should be 20 but adaptable\nSize is " + Size(ref set1) + " and Capacity is " + Capacity(ref set1));
 
-            Console.WriteLine("Size of set is should be 6, capacity should be 20 but adaptable\nSize is " + Size(ref set1) + " and Capacity is " + Capacity(ref set1));
-
-
-
-
+            //Testing is Subset, 1 is false, 2 is true
             Console.WriteLine("\nThe below should resolve to false as neither are subsets\n" + Is_Subset(ref set1, ref set2));
+            Console.WriteLine("\nThe below should resolve to true, as set3 is a part of set1\n" + Is_Subset(ref set3, ref set1));
 
             
             int[] intersec = Intersection(ref set1, ref set2);
